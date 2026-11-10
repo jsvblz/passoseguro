@@ -1,0 +1,18 @@
+{
+  "name": "Passo Seguro · Navegação Acessível Mobile",
+  "short_name": "Passo Seguro",
+  "description": "Aplicativo mobile de navegação interna acessível por voz, som espacial e vibração para pessoas cegas e com baixa visão.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#002A5C",
+  "theme_color": "#002A5C",
+  "icons": [
+    {
+      "src": "logo-passo-seguro.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
+

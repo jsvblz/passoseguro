@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#002A5C">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Passo Seguro · Aplicativo Mobile Acessível</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="logo-passo-seguro.jpg" type="image/jpeg">
+  <link rel="apple-touch-icon" href="logo-passo-seguro.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <!-- Regiões ARIA-LIVE para TalkBack e VoiceOver -->
+  <div id="liveAssertive" class="sr-only" aria-live="assertive" aria-atomic="true"></div>
+  <div id="livePolite" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- MOLDURA VERTICAL DE CELULAR -->
+  <div class="phone-frame" id="phoneApp">
+
+    <!-- ======================================================================
+         TELA INICIAL DE ACESSO / LOGIN (BASE IGUAL AO APP + LOGO NO FUNDO)
+         ====================================================================== -->
+    <section id="loginOverlay" class="login-screen" role="region" aria-label="Tela inicial de acesso ao Passo Seguro">
+      <!-- Logo no fundo (marca d'água suave) -->
+      <div class="login-bg-watermark" aria-hidden="true"></div>
+
+      <div class="login-scroll-content">
+        <!-- Logo Oficial em Destaque no Topo -->
+        <div class="login-hero">
+          <div class="login-logo-box">
+            <img src="logo-passo-seguro.jpg" alt="Logo Passo Seguro" class="login-hero-img">
+          </div>
+          <h2 class="login-title">Bem-vindo ao Passo Seguro</h2>
+          <p class="login-subtitle">Navegação Acessível passo a passo por voz</p>
+        </div>
+
+        <!-- Cartão de Login (Nome, CPF e Senha) seguindo a mesma base v-card do app -->
+        <form id="loginForm" class="v-card highlight login-form-card" novalidate>
+          <div class="login-field">
+            <label for="inputLoginName">👤 Nome completo:</label>
+            <input type="text" id="inputLoginName" class="input-box" placeholder="Digite seu nome..." autocomplete="name" required>
+          </div>
+
+          <div class="login-field">
+            <label for="inputLoginCpf">🪪 CPF:</label>
+            <input type="text" id="inputLoginCpf" class="input-box" inputmode="numeric" maxlength="14"
+              placeholder="000.000.000-00" autocomplete="off" required>
+          </div>
+
+          <div class="login-field">
+            <label for="inputLoginPass">🔒 Senha:</label>
+            <input type="password" id="inputLoginPass" class="input-box" placeholder="Digite sua senha..." autocomplete="current-password" required>
+          </div>
+
+          <p id="loginErrorMsg" class="login-error-msg" role="alert" hidden></p>
+
+          <button type="submit" id="btnLoginSubmit" class="btn gold btn-start-giant">
+            <span aria-hidden="true">🚀</span>
+            <span>ENTRAR NO PASSO SEGURO</span>
+          </button>
+
+          <div class="login-divider" aria-hidden="true">
+            <span>ou acesse rápido com</span>
+          </div>
+
+          <!-- Botão de Login com Google embaixo -->
+          <button type="button" id="btnLoginGoogle" class="btn btn-google">
+            <svg class="google-svg-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.2 1.3-1.6 3.8-5.5 3.8-3.3 0-6-2.7-6-6s2.7-6 6-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.4 14.6 2.5 12 2.5 6.8 2.5 2.5 6.8 2.5 12s4.3 9.5 9.5 9.5c5.5 0 9.1-3.8 9.1-9.3 0-.6-.1-1.1-.2-1.6H12z"/>
+              <path fill="#34A853" d="M3.6 7.4l3.2 2.4C7.7 7.8 9.7 6.4 12 6.4c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.4 14.6 2.5 12 2.5 8.3 2.5 5.1 4.6 3.6 7.4z"/>
+              <path fill="#FBBC05" d="M12 21.5c2.5 0 4.7-.8 6.2-2.3l-2.9-2.4c-.8.6-1.9 1-3.3 1-3.8 0-5.2-2.5-5.5-3.8l-3.2 2.5c1.5 3 4.8 5 8.7 5z"/>
+              <path fill="#4285F4" d="M21.1 12.2c0-.6-.1-1.1-.2-1.6H12v3.9h5.5c-.3 1.3-1.1 2.4-2.2 3.1l2.9 2.4c1.7-1.6 2.9-4.1 2.9-7.8z"/>
+            </svg>
+            <span>Entrar com Google</span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PAINEL / TELA "MINHA CONTA" (ACESSADO PELO ÍCONE DO USUÁRIO NO TOPO DIREITO)
+         ====================================================================== -->
+    <section id="profileOverlay" class="profile-screen" role="dialog" aria-modal="true"
+      aria-label="Minha Conta e Informações do Usuário" hidden>
+      <div class="profile-topbar">
+        <h2 style="margin:0;font-size:1.15rem;color:var(--brand-navy);">👤 Minha Conta</h2>
+        <button type="button" id="btnCloseProfile" class="icon-btn" aria-label="Fechar Minha Conta">
+          ✕ Fechar
+        </button>
+      </div>
+
+      <div class="profile-scroll-body">
+        <!-- Cartão de Identificação do Usuário -->
+        <div class="v-card highlight profile-header-card">
+          <div class="profile-avatar-large" id="profileBigAvatar" aria-hidden="true">👤</div>
+          <div style="text-align:center;">
+            <h3 id="profileDisplayName" style="margin:0;font-size:1.22rem;color:var(--brand-navy);">
+              Usuário Passo Seguro
+            </h3>
+            <p id="profileDisplayMethod" style="margin:4px 0 0;font-size:0.86rem;color:var(--mut);font-weight:700;">
+              ✅ Conta Verificada · Acesso Ativo
+            </p>
+          </div>
+
+          <div class="profile-info-list">
+            <div class="profile-info-row">
+              <span>🪪 CPF Cadastrado:</span>
+              <strong id="profileDisplayCpf">000.000.000-00</strong>
+            </div>
+            <div class="profile-info-row">
+              <span>📧 E-mail / Login:</span>
+              <strong id="profileDisplayEmail">usuario@passoseguro.com.br</strong>
+            </div>
+            <div class="profile-info-row">
+              <span>📍 Cidade / Região:</span>
+              <strong>Recife - PE</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Estatísticas de Uso do Usuário no Aplicativo -->
+        <div class="v-card">
+          <h3 class="section-title">📊 Resumo da Sua Conta</h3>
+          <div class="profile-stats-grid">
+            <div class="profile-stat-box">
+              <strong id="statFavCount">3</strong>
+              <span>Favoritos Salvos</span>
+            </div>
+            <div class="profile-stat-box">
+              <strong id="statRoutesCount">12</strong>
+              <span>Rotas Guiadas</span>
+            </div>
+            <div class="profile-stat-box">
+              <strong id="statPostsCount">1</strong>
+              <span>Dicas na Comunidade</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Perfil de Acessibilidade e Mobilidade (Editável) -->
+        <div class="v-card">
+          <h3 class="section-title">🦯 Meu Perfil de Acessibilidade</h3>
+          <div class="login-field">
+            <label for="selProfileVisual">Condição Visual:</label>
+            <select id="selProfileVisual" class="input-box" style="min-height:50px;padding:6px 12px;">
+              <option value="Baixa Visão">Baixa Visão</option>
+              <option value="Cegueira Total">Cegueira Total</option>
+              <option value="Visão Monocular / Reduzida">Visão Monocular / Reduzida</option>
+              <option value="Acompanhante / Familiar">Acompanhante / Familiar</option>
+            </select>
+          </div>
+
+          <div class="login-field">
+            <label for="selProfileMobility">Auxílio de Locomoção:</label>
+            <select id="selProfileMobility" class="input-box" style="min-height:50px;padding:6px 12px;">
+              <option value="Bengala Longa / Verde">Bengala Longa / Verde</option>
+              <option value="Cão-Guia">Cão-Guia</option>
+              <option value="Guia Vidente">Apoio de Guia Vidente</option>
+              <option value="Locomoção Independente">Locomoção Independente sem Bengala</option>
+            </select>
+          </div>
+
+          <div class="login-field">
+            <label for="inpProfileEmergency">📞 Contato de Emergência / Apoio:</label>
+            <input type="tel" id="inpProfileEmergency" class="input-box" style="min-height:50px;"
+              value="(81) 99876-5432 - Familiar">
+          </div>
+
+          <button type="button" id="btnSaveProfilePrefs" class="btn primary">
+            <span aria-hidden="true">💾</span> Salvar Informações da Conta
+          </button>
+        </div>
+
+        <!-- Ações da Conta: Ouvir Dados por Voz ou Sair / Trocar Conta -->
+        <div class="v-card">
+          <button type="button" id="btnSpeakProfileSummary" class="btn gold">
+            <span aria-hidden="true">🔊</span> Ouvir Todas as Informações da Conta
+          </button>
+
+          <button type="button" id="btnLogout" class="btn danger">
+            <span aria-hidden="true">🚪</span> Sair da Conta (Voltar ao Login)
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TOPO DO CELULAR: LOGO OFICIAL "PASSO SEGURO" + BOTÃO ALTO CONTRASTE
+         ====================================================================== -->
+    <header class="phone-header" role="banner">
+      <div class="header-brand-row">
+        <!-- Logo Oficial Passo Seguro -->
+        <div class="logo-container">
+          <img src="logo-passo-seguro.jpg" alt="Passo Seguro - Navegação Acessível" class="brand-logo-img">
+          <h1 class="sr-only">Passo Seguro</h1>
+        </div>
+
+        <div class="header-tools" role="toolbar" aria-label="Ajustes rápidos de voz, fonte e local">
+          <button type="button" id="btnToggleSR" class="icon-btn" aria-pressed="false"
+            title="Alternar modo TalkBack/VoiceOver (silencia voz interna) ou Voz Interna do App"
+            aria-label="Alternar sintetizador de voz interna ou leitor de tela">
+            <span id="lblSRIcon" aria-hidden="true">🔊</span>
+          </button>
+
+          <button type="button" id="btnCycleFont" class="icon-btn" title="Aumentar ou diminuir fonte"
+            aria-label="Alternar tamanho da fonte">
+            <span id="lblFontBtn">Aa</span>
+          </button>
+
+          <button type="button" id="btnToggleDebug" class="icon-btn" aria-expanded="false" aria-controls="debugBar"
+            title="Escolher estabelecimento ou local atual" aria-label="Escolher estabelecimento ou local">
+            <span aria-hidden="true">📍</span>
+          </button>
+
+          <!-- Ícone do Usuário no Canto Superior Direito (Abre Minha Conta) -->
+          <button type="button" id="btnOpenProfile" class="icon-btn user-avatar-btn" aria-expanded="false"
+            aria-controls="profileOverlay" title="Acessar Minha Conta e Informações do Usuário"
+            aria-label="Acessar minha conta e informações do usuário">
+            <span id="lblUserAvatarIcon" aria-hidden="true">👤</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Botão Dedicado de Alto Contraste (Preto e Amarelo) para Baixa Visão -->
+      <div class="contrast-toggle-bar">
+        <button type="button" id="btnToggleHC" class="btn-hc-banner" aria-pressed="false">
+          <span aria-hidden="true">◐</span>
+          <span id="lblContrastMode">Ativar Alto Contraste (Preto/Amarelo)</span>
+        </button>
+      </div>
+
+      <div id="headerEnvSubtitle" class="status-pill" role="status">
+        📍 Supermercado Bom Preço · Posição: (2, 10)
+      </div>
+
+      <!-- Barra Expansível de Local / Estabelecimento -->
+      <section id="debugBar" class="debug-bar" aria-label="Selecionar estabelecimento e seu local atual" hidden>
+        <div class="debug-field">
+          <label for="selDebugEnv">Estabelecimento:</label>
+          <select id="selDebugEnv">
+            <option value="supermercado">Supermercado Bom Preço</option>
+            <option value="hospital">Clínica Lucilo Ávila</option>
+            <option value="faculdade">SENAC Recife</option>
+          </select>
+        </div>
+        <div class="debug-field">
+          <label for="selDebugTeleport">Local atual:</label>
+          <div class="debug-inline-select">
+            <select id="selDebugTeleport"></select>
+            <button type="button" id="btnDebugArrival" class="icon-btn"
+              style="background:var(--gold-btn-bg);color:var(--gold-btn-ink);white-space:nowrap;">
+              🏁 Chegar
+            </button>
+          </div>
+        </div>
+      </section>
+    </header>
+
+    <!-- Toast Flutuante -->
+    <div id="phoneToast" class="phone-toast" role="status" aria-live="polite"></div>
+
+    <!-- ======================================================================
+         ÁREA CENTRAL VERTICAL (CONTEÚDO DAS 4 ABAS)
+         ====================================================================== -->
+    <main class="phone-Viewport" id="phoneViewport" role="main">
+
+      <!-- ====================================================================
+           ABA 1: INÍCIO (ESCOLHA SIMPLES -> MARCAS/TIPOS -> BREVE MAPA + COMEÇAR)
+           ==================================================================== -->
+      <section id="screen-inicio" class="tab-screen active" role="tabpanel" aria-labelledby="tabBtnInicio">
+        <!-- Balão de Boas-Vindas e Comando de Voz -->
+        <div class="assistant-bubble" role="region" aria-label="Assistente de voz Passo Seguro">
+          <div class="assistant-top">
+            <div class="assistant-avatar" aria-hidden="true">🦯</div>
+            <div>
+              <strong style="color:#F2B705;font-size:0.86rem;">PASSO SEGURO</strong>
+              <p id="welcomeSpeechText" class="assistant-speech">
+                "Olá! Eu sou Passo Seguro e estou aqui para te ajudar !"
+              </p>
+            </div>
+          </div>
+
+          <button type="button" id="btnVoiceHome" class="btn gold">
+            <span aria-hidden="true">🎙️</span>
+            <span id="lblVoiceHome">Falar o que você procura (Voz)</span>
+          </button>
+
+          <p id="voiceTranscriptHome" style="margin:0;font-size:0.84rem;color:#FFE57F;" role="status">
+            Ou toque em uma opção simples abaixo:
+          </p>
+        </div>
+
+        <!-- PASSO 1: OPÇÕES SIMPLES (EX: LEITE, FEIJÃO, ARROZ...) -> DEPOIS VÊM AS MARCAS E TIPOS -->
+        <div class="v-card">
+          <h2 class="section-title">
+            <span>1. O que você procura?</span>
+          </h2>
+
+          <label for="inputHomeSearch" class="sr-only">Pesquisar produto simples</label>
+          <input type="search" id="inputHomeSearch" class="input-box"
+            placeholder="Pesquisar rápido (ex: Leite, Feijão, Pão)..." autocomplete="off">
+
+          <!-- Lista de Botões Simples (Leite, Feijão, Arroz...) e Marcas Expansíveis -->
+          <div id="simpleGroupsContainer" class="simple-group-grid"></div>
+        </div>
+
+        <!-- PASSO 2: BREVE MAPA EMBAIXO + BOTÃO "COMEÇAR" (E GUIA GPS QUANDO INICIADO) -->
+        <div id="homeBottomMapCard" class="mini-map-card" role="region" aria-label="Breve mapa da rota e botão Começar">
+          <h2 class="section-title">
+            <span id="miniMapTitle">2. Breve Mapa do Local Escolhido</span>
+            <span id="miniMapStepsBadge" class="badge-tag">Escolha um item</span>
+          </h2>
+
+          <p id="miniMapDesc" class="gps-instruction-banner" style="margin:0;">
+            Toque em um produto acima (ex: Leite) e escolha a marca para ver o caminho no mapa abaixo e tocar em
+            Começar.
+          </p>
+
+          <!-- Breve Mapa Visual e Tátil -->
+          <div class="map-canvas-box">
+            <canvas id="miniHomeMap" width="520" height="360" tabindex="0" role="img"
+              aria-label="Breve mapa mostrando onde você está e a linha amarela até o produto escolhido."></canvas>
+          </div>
+
+          <!-- Botão Principal: COMEÇAR -> CONTINUAR INSTRUÇÃO -->
+          <button type="button" id="btnStartGpsNow" class="btn gold btn-start-giant">
+            <span id="iconBtnStartGps" aria-hidden="true">🚀</span>
+            <span id="lblBtnStartGps">COMEÇAR</span>
+          </button>
+
+          <!-- Botões auxiliares discretos (Repetir Voz / Simular Desvio) -->
+          <div id="gpsControlsPanel"
+            style="display:none;flex-direction:column;gap:8px;padding-top:6px;border-top:2px solid var(--line);">
+            <div class="btn-grid-2">
+              <button type="button" id="btnRepeatGpsStep" class="btn">
+                <span aria-hidden="true">🔊</span> Ouvir de Novo
+              </button>
+              <button type="button" id="btnGpsObstacle" class="btn danger">
+                <span aria-hidden="true">🚧</span> Simular Obstáculo
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           ABA 2: MAPA (DESTINO ESCOLHIDO + ESTABELECIMENTOS PRÓXIMOS + MAPA SONORO)
+           ==================================================================== -->
+      <section id="screen-mapa" class="tab-screen" role="tabpanel" aria-labelledby="tabBtnMapa" hidden>
+        <div class="v-card highlight" role="region" aria-label="Seu local escolhido anteriormente">
+          <div class="section-title">
+            <span>🎯 Rota Guiada no Mapa</span>
+            <span id="mapStepsBadge" class="badge-tag">Pronto</span>
+          </div>
+          <p id="mapSpokenHistoryText" class="gps-instruction-banner" style="margin:0;">
+            Você está no Supermercado Bom Preço. Escolha um item no Início para traçar a rota.
+          </p>
+          <button type="button" id="btnMapResumeGps" class="btn gold btn-start-giant">
+            <span id="iconBtnMapGps" aria-hidden="true">🚀</span>
+            <span id="lblBtnMapGps">COMEÇAR</span>
+          </button>
+        </div>
+
+        <div class="v-card">
+          <h2 class="section-title">🗺️ Mapa Tátil Sonoro Completo</h2>
+          <p id="mapTouchFeedback" style="margin:0;font-size:0.88rem;color:var(--mut);" role="status">
+            Arraste o dedo sobre o mapa para ouvir o nome de cada corredor e sentir a vibração.
+          </p>
+
+          <div class="map-canvas-box">
+            <canvas id="spatialMap" width="640" height="480" tabindex="0" role="application"
+              aria-label="Mapa sonoro completo. Arraste o dedo para explorar os corredores."></canvas>
+          </div>
+        </div>
+
+        <div class="v-card">
+          <h2 class="section-title">🏢 Estabelecimentos Perto de Você</h2>
+          <div id="nearbyPlacesContainer" style="display:flex;flex-direction:column;gap:10px;"></div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           ABA 3: FAVORITOS (PRODUTOS E LOCAIS SALVOS)
+           ==================================================================== -->
+      <section id="screen-favoritos" class="tab-screen" role="tabpanel" aria-labelledby="tabBtnFavoritos" hidden>
+        <div class="v-card">
+          <h2 class="section-title">⭐ Meus Favoritos</h2>
+          <p style="margin:0;font-size:0.9rem;color:var(--mut);">
+            Toque em Começar em qualquer favorito abaixo para ir direto até ele:
+          </p>
+          <div id="favoritesListContainer" style="display:flex;flex-direction:column;gap:10px;"></div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           ABA 4: COMUNIDADE (BATE-PAPO ENTRE CEGOS E DEFICIENTES VISUAIS)
+           ==================================================================== -->
+      <section id="screen-comunidade" class="tab-screen" role="tabpanel" aria-labelledby="tabBtnComunidade" hidden>
+        <div class="v-card highlight">
+          <h2 class="section-title">💬 Bate-Papo da Comunidade</h2>
+          <p style="margin:0;font-size:0.88rem;color:var(--mut);">
+            Converse, tire dúvidas e indique locais com acessibilidade para ajudar outras pessoas cegas e com baixa
+            visão:
+          </p>
+
+          <label for="inputCommPlace" style="font-weight:700;font-size:0.88rem;color:var(--brand-navy);">
+            Local:
+          </label>
+          <input type="text" id="inputCommPlace" class="input-box" value="Supermercado Bom Preço">
+
+          <label for="inputCommMessage" style="font-weight:700;font-size:0.88rem;color:var(--brand-navy);">
+            Mensagem ou dica:
+          </label>
+          <textarea id="inputCommMessage" class="textarea-box"
+            placeholder="Escreva ou fale por voz sua dica..."></textarea>
+
+          <div class="btn-grid-2">
+            <button type="button" id="btnDictateComm" class="btn">
+              <span aria-hidden="true">🎙️</span> Falar por Voz
+            </button>
+            <button type="button" id="btnPublishComm" class="btn gold">
+              <span aria-hidden="true">📨</span> Enviar
+            </button>
+          </div>
+        </div>
+
+        <div class="v-card">
+          <h3 class="section-title">📢 Mensagens Recentes</h3>
+          <div id="communityFeedContainer" style="display:flex;flex-direction:column;gap:12px;"></div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ======================================================================
+         BARRA INFERIOR DO CELULAR: 4 ABAS (INÍCIO, MAPA, FAVORITOS, COMUNIDADE)
+         ====================================================================== -->
+    <nav class="bottom-tabbar" role="tablist" aria-label="Navegação principal do aplicativo">
+      <button type="button" role="tab" id="tabBtnInicio" class="bottom-tab" aria-selected="true"
+        aria-controls="screen-inicio" data-tab="screen-inicio" data-title="Início">
+        <span class="tab-icon" aria-hidden="true">🏠</span>
+        <span>Início</span>
+      </button>
+
+      <button type="button" role="tab" id="tabBtnMapa" class="bottom-tab" aria-selected="false"
+        aria-controls="screen-mapa" data-tab="screen-mapa" data-title="Mapa">
+        <span class="tab-icon" aria-hidden="true">🗺️</span>
+        <span>Mapa</span>
+      </button>
+
+      <button type="button" role="tab" id="tabBtnFavoritos" class="bottom-tab" aria-selected="false"
+        aria-controls="screen-favoritos" data-tab="screen-favoritos" data-title="Favoritos">
+        <span class="tab-icon" aria-hidden="true">⭐</span>
+        <span>Favoritos</span>
+        <span id="favCountBadge" class="nav-count-pill">3</span>
+      </button>
+
+      <button type="button" role="tab" id="tabBtnComunidade" class="bottom-tab" aria-selected="false"
+        aria-controls="screen-comunidade" data-tab="screen-comunidade" data-title="Comunidade">
+        <span class="tab-icon" aria-hidden="true">💬</span>
+        <span>Comunidade</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- MÓDULOS JAVASCRIPT PUROS -->
+  <script src="js/data.js"></script>
+  <script src="js/sensory.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
